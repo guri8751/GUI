@@ -1,0 +1,73 @@
+from tkinter import *
+import tkinter.font
+from gpiozero import LED
+import RPi.GPIO
+RPi.GPIO.setmode(RPi.GPIO.BCM)
+
+
+led_red=LED(18)
+led_yellow=LED(23)
+led_green=LED(24)
+
+win = Tk()
+win.title("LED Toggler")
+myFont=tkinter.font.Font(family = "Arial" , size =14 ,weight = "bold")
+
+
+
+def ledToggle_Red():
+    if led_red.is_lit:
+        led_red.off()
+        ledButton_Red["text"] = "Turn LED on"
+    else:
+        led_yellow.off()
+        ledButton_Yellow["text"] = "Turn LED on"
+        led_green.off()
+        ledButton_Green["text"] = "Turn LED on"
+        led_red.on()
+        ledButton_Red["text"] = "Turn LED off"
+        
+        
+def ledToggle_Yellow():
+    if led_yellow.is_lit:
+        led_yellow.off()
+        ledButton_Yellow["text"] = "Turn LED on"
+    else:
+        led_red.off()
+        ledButton_Red["text"] = "Turn LED on"
+        led_green.off()
+        ledButton_Green["text"] = "Turn LED on"
+        led_yellow.on()
+        ledButton_Yellow["text"] = "Turn LED off"
+        
+        
+def ledToggle_Green():
+    if led_green.is_lit:
+        led_green.off()
+        ledButton_Green["text"] = "Turn LED on"
+    else:
+        led_yellow.off()
+        ledButton_Yellow["text"] = "Turn LED on"
+        led_red.off()
+        ledButton_Red["text"] = "Turn LED on"
+        led_green.on()
+        ledButton_Green["text"] = "Turn LED off"
+        
+
+def exitFunction():
+    RPi.GPIO.cleanup()
+    win.destroy()
+    
+
+
+ledButton_Red = Button(win, text="Turn LED on" ,font =myFont,command =ledToggle_Red,bg='red', height =3 , width =17)
+ledButton_Red.grid(row=0,column =0)
+
+ledButton_Yellow = Button(win, text="Turn LED on" ,font =myFont,command =ledToggle_Yellow,bg='yellow', height =3 , width =17)
+ledButton_Yellow.grid(row=0,column =5)
+
+ledButton_Green = Button(win, text="Turn LED on" ,font =myFont,command =ledToggle_Green,bg='green', height =3 , width =17)
+ledButton_Green.grid(row=0,column =10)
+
+exitButton = Button(win, text="Exit" ,font =myFont,command =exitFunction,bg="blue", height =3 , width =17)
+exitButton.grid(row=1,column =5)
